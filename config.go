@@ -54,7 +54,7 @@ func (f *Filter) configureDefaults() {
 	}
 
 	if f.bucketTotal <= 0 {
-		BucketEntries(defaultBucketTotal)(f)
+		BucketTotal(defaultBucketTotal)(f)
 	}
 
 	if f.fingerprintLength <= 0 {

@@ -9,10 +9,10 @@ import (
 func TestFilter_New_withDefaults(t *testing.T) {
 	filter := New()
 	assert.IsType(t, filter.hasher, defaultHasher)
-	assert.IsType(t, filter.kicks, defaultKicks)
-	assert.IsType(t, filter.fingerprintLength, defaultFingerprintLength)
-	assert.IsType(t, filter.bucketEntries, defaultBucketEntries)
-	assert.IsType(t, filter.bucketTotal, defaultBucketTotal)
+	assert.Equal(t, filter.kicks, defaultKicks)
+	assert.Equal(t, filter.fingerprintLength, defaultFingerprintLength)
+	assert.Equal(t, filter.bucketEntries, defaultBucketEntries)
+	assert.Equal(t, filter.bucketTotal, defaultBucketTotal)
 }
 
 func TestFilter_New_withConfigOptions(t *testing.T) {
@@ -23,7 +23,7 @@ func TestFilter_New_withConfigOptions(t *testing.T) {
 	entriesOption := BucketEntries(entries)
 
 	buckets := uint(42)
-	bucketsOption := BucketEntries(buckets)
+	bucketsOption := BucketTotal(buckets)
 
 	filter := New(
 		kicksOption,
@@ -31,9 +31,9 @@ func TestFilter_New_withConfigOptions(t *testing.T) {
 		bucketsOption,
 	)
 
-	assert.IsType(t, filter.hasher, defaultHasher)
-	assert.IsType(t, filter.kicks, kicks)
-	assert.IsType(t, filter.fingerprintLength, defaultFingerprintLength)
-	assert.IsType(t, filter.bucketEntries, entries)
-	assert.IsType(t, filter.bucketTotal, buckets)
+	assert.Equal(t, filter.hasher, defaultHasher)
+	assert.Equal(t, filter.kicks, kicks)
+	assert.Equal(t, filter.fingerprintLength, defaultFingerprintLength)
+	assert.Equal(t, filter.bucketEntries, entries)
+	assert.Equal(t, filter.bucketTotal, buckets)
 }
