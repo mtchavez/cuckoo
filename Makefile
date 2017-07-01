@@ -8,6 +8,7 @@ default: test
 
 deps:
 	@go get -u -v $(GOPKGS)
+	@go get -u -v -t ./...
 	@if [ `which godep` ] && [ -f ./Godeps/Godeps.json ]; then godep restore; fi
 
 lint:
