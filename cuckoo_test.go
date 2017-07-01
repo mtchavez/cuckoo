@@ -37,3 +37,10 @@ func TestFilter_New_withConfigOptions(t *testing.T) {
 	assert.Equal(t, filter.bucketEntries, entries)
 	assert.Equal(t, filter.bucketTotal, buckets)
 }
+
+func TestItemCount(t *testing.T) {
+	filter := New()
+	assert.Equal(t, filter.ItemCount(), uint(0))
+	filter.count++
+	assert.Equal(t, filter.ItemCount(), uint(1))
+}
