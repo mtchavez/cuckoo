@@ -126,7 +126,14 @@ func TestLookup(t *testing.T) {
 		values = append(values, word)
 	}
 
+	var found int = 0
 	for _, word := range values {
-		assert.Equal(t, filter.Lookup(word), true)
+		if !filter.Lookup(word) {
+			found++
+			t.Errorf("Expected to find %+v in filter", word)
+		}
 	}
+	total := int(totalWords)
+	miss := float64(found) / float64(total)
+	assert.Equal(t, miss, float64(0))
 }

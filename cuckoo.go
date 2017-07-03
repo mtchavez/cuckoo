@@ -44,7 +44,7 @@ func (f *Filter) Lookup(item []byte) bool {
 	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
 	i1 := uint(farm.Hash64(item)) % f.capacity
 	i2 := f.alternateIndex(fp, i1)
-	if f.insert(fp, i1) || f.insert(fp, i2) {
+	if f.lookup(fp, i1) || f.lookup(fp, i2) {
 		return true
 	}
 	return false
@@ -69,6 +69,13 @@ func (f *Filter) relocationInsert(fp fingerprint, i uint) bool {
 		if f.insert(fp, i) {
 			return true
 		}
+	}
+	return false
+}
+
+func (f *Filter) lookup(fp fingerprint, i uint) bool {
+	if f.buckets[i].lookup(fp) {
+		return true
 	}
 	return false
 }
