@@ -1,6 +1,8 @@
 package cuckoo
 
 import (
+	"bufio"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -36,4 +38,68 @@ func TestFilter_New_withConfigOptions(t *testing.T) {
 	assert.Equal(t, filter.fingerprintLength, defaultFingerprintLength)
 	assert.Equal(t, filter.bucketEntries, entries)
 	assert.Equal(t, filter.bucketTotal, buckets)
+}
+
+func TestInsert(t *testing.T) {
+	filter := New()
+	fd, err := os.Open("/usr/share/dict/words")
+	defer fd.Close()
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	scanner := bufio.NewScanner(fd)
+	var wordCount uint
+	var totalWords uint
+	var values [][]byte
+	for scanner.Scan() {
+		word := []byte(scanner.Text())
+		totalWords++
+
+		if filter.Insert(word) {
+			wordCount++
+		}
+		values = append(values, word)
+	}
+
+	assert.Equal(t, int(filter.ItemCount()), int(totalWords))
+}
+
+func TestInsert_withRelocations(t *testing.T) {
+	filter := New(
+		BucketTotal(250000),
+		BucketEntries(6),
+		FingerprintLength(1),
+	)
+
+	fd, err := os.Open("/usr/share/dict/words")
+	defer fd.Close()
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	scanner := bufio.NewScanner(fd)
+	var wordCount uint
+	var totalWords uint
+	var values [][]byte
+	for scanner.Scan() {
+		word := []byte(scanner.Text())
+		totalWords++
+
+		if filter.Insert(word) {
+			wordCount++
+		}
+		values = append(values, word)
+	}
+	inserted := int(filter.ItemCount())
+	total := int(totalWords)
+	miss := 1 - (float64(inserted) / float64(total))
+	assert.Equal(t, miss <= 0.065, true)
+}
+
+func TestItemCount(t *testing.T) {
+	filter := New()
+	assert.Equal(t, filter.ItemCount(), uint(0))
+	filter.count++
+	assert.Equal(t, filter.ItemCount(), uint(1))
 }
