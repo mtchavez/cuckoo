@@ -40,6 +40,13 @@ func (f *Filter) Insert(item []byte) bool {
 	return f.relocationInsert(fp, i2)
 }
 
+func (f *Filter) InsertUnique(item []byte) bool {
+	if f.Lookup(item) {
+		return true
+	}
+	return f.Insert(item)
+}
+
 func (f *Filter) Lookup(item []byte) bool {
 	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
 	i1 := uint(farm.Hash64(item)) % f.capacity
