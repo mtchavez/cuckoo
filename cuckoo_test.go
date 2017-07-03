@@ -137,3 +137,33 @@ func TestLookup(t *testing.T) {
 	miss := float64(found) / float64(total)
 	assert.Equal(t, miss, float64(0))
 }
+
+func TestDelete(t *testing.T) {
+	filter := New()
+	fd, err := os.Open("/usr/share/dict/words")
+	defer fd.Close()
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	scanner := bufio.NewScanner(fd)
+	var wordCount uint
+	var totalWords uint
+	var values [][]byte
+	for scanner.Scan() {
+		word := []byte(scanner.Text())
+		totalWords++
+
+		if filter.Insert(word) {
+			wordCount++
+		}
+		values = append(values, word)
+	}
+
+	for _, word := range values {
+		if !filter.Delete(word) {
+			t.Errorf("Expected to delete %+v in filter", word)
+		}
+	}
+	assert.Equal(t, filter.ItemCount(), uint(0))
+}

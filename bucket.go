@@ -26,6 +26,16 @@ func (b bucket) lookup(fp fingerprint) bool {
 	return false
 }
 
+func (b bucket) delete(fp fingerprint) bool {
+	for i, fprint := range b {
+		if bytes.Equal(fp, fprint) {
+			b[i] = nil
+			return true
+		}
+	}
+	return false
+}
+
 func (b bucket) relocate(fp fingerprint) fingerprint {
 	i := rand.Intn(len(b))
 	b[i], fp = fp, b[i]

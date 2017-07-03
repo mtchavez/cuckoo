@@ -50,6 +50,16 @@ func (f *Filter) Lookup(item []byte) bool {
 	return false
 }
 
+func (f *Filter) Delete(item []byte) bool {
+	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
+	i1 := uint(farm.Hash64(item)) % f.capacity
+	i2 := f.alternateIndex(fp, i1)
+	if f.delete(fp, i1) || f.delete(fp, i2) {
+		return true
+	}
+	return false
+}
+
 func (f *Filter) ItemCount() uint {
 	return f.count
 }
@@ -75,6 +85,14 @@ func (f *Filter) relocationInsert(fp fingerprint, i uint) bool {
 
 func (f *Filter) lookup(fp fingerprint, i uint) bool {
 	if f.buckets[i].lookup(fp) {
+		return true
+	}
+	return false
+}
+
+func (f *Filter) delete(fp fingerprint, idx uint) bool {
+	if f.buckets[idx].delete(fp) {
+		f.count--
 		return true
 	}
 	return false
