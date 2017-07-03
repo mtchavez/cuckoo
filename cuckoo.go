@@ -40,6 +40,16 @@ func (f *Filter) Insert(item []byte) bool {
 	return f.relocationInsert(fp, i2)
 }
 
+func (f *Filter) Lookup(item []byte) bool {
+	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
+	i1 := uint(farm.Hash64(item)) % f.capacity
+	i2 := f.alternateIndex(fp, i1)
+	if f.insert(fp, i1) || f.insert(fp, i2) {
+		return true
+	}
+	return false
+}
+
 func (f *Filter) ItemCount() uint {
 	return f.count
 }
