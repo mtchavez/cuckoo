@@ -1,6 +1,7 @@
 package cuckoo
 
 import (
+	"bytes"
 	"math/rand"
 )
 
@@ -10,6 +11,15 @@ func (b bucket) insert(fp fingerprint) bool {
 	for i, fprint := range b {
 		if fprint == nil {
 			b[i] = fp
+			return true
+		}
+	}
+	return false
+}
+
+func (b bucket) lookup(fp fingerprint) bool {
+	for _, fprint := range b {
+		if bytes.Equal(fp, fprint) {
 			return true
 		}
 	}
