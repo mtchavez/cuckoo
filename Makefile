@@ -23,6 +23,6 @@ ci: deps vet lint test
 
 test:
 	@echo "[Test] running tests"
-	@go test -v -cover
+	@if [ "$CI" ]; then goveralls -service=travis-ci; else go test -v -cover; fi
 
 .PHONY: default golint test vet deps
