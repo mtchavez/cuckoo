@@ -126,7 +126,7 @@ func TestLookup(t *testing.T) {
 		values = append(values, word)
 	}
 
-	var found int = 0
+	var found = 0
 	for _, word := range values {
 		if !filter.Lookup(word) {
 			found++

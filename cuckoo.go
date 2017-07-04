@@ -9,6 +9,9 @@ import (
 
 const magicNumber uint64 = 0x5bd1e995
 
+// Filter ...
+//
+// Cuckoo filter type
 type Filter struct {
 	buckets           []bucket
 	bucketEntries     uint
@@ -20,7 +23,20 @@ type Filter struct {
 	kicks             uint
 }
 
-func New(opts ...configOption) (filter *Filter) {
+// New ...
+//
+// Create a new Filter with an optional set of ConfigOption to configure settings.
+//
+// Example: New Filter with custom config option
+//
+// New(FingerprintLength(4))
+//
+// Example: New Filter with default config
+//
+// New()
+//
+// returns a Filter type
+func New(opts ...ConfigOption) (filter *Filter) {
 	filter = &Filter{}
 	for _, option := range opts {
 		option(filter)
@@ -30,6 +46,15 @@ func New(opts ...configOption) (filter *Filter) {
 	return
 }
 
+// Insert ...
+//
+// Add a new item of []byte to a Filter
+//
+// Example:
+//
+// filter.Insert([]byte("new-item"))
+//
+// returns a boolean of whether the item was inserted or not
 func (f *Filter) Insert(item []byte) bool {
 	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
 	i1 := uint(farm.Hash64(item)) % f.capacity
@@ -40,6 +65,16 @@ func (f *Filter) Insert(item []byte) bool {
 	return f.relocationInsert(fp, i2)
 }
 
+// InsertUnique ...
+//
+// Add a new item of []byte to a Filter only if it doesn't already exist.
+// Will do a Lookup of item first.
+//
+// Example:
+//
+// filter.InsertUnique([]byte("new-item"))
+//
+// returns a boolean of whether the item was inserted or not
 func (f *Filter) InsertUnique(item []byte) bool {
 	if f.Lookup(item) {
 		return true
@@ -47,6 +82,15 @@ func (f *Filter) InsertUnique(item []byte) bool {
 	return f.Insert(item)
 }
 
+// Lookup ...
+//
+// Check if an item of []byte exists in the Filter
+//
+// Example:
+//
+// filter.Lookup([]byte("new-item"))
+//
+// returns a boolean of whether the item exists or not
 func (f *Filter) Lookup(item []byte) bool {
 	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
 	i1 := uint(farm.Hash64(item)) % f.capacity
@@ -57,6 +101,15 @@ func (f *Filter) Lookup(item []byte) bool {
 	return false
 }
 
+// Delete ...
+//
+// Delete an item of []byte if it exists in the Filter
+//
+// Example:
+//
+// filter.Delete([]byte("new-item"))
+//
+// returns a boolean of whether the item was deleted or not
 func (f *Filter) Delete(item []byte) bool {
 	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
 	i1 := uint(farm.Hash64(item)) % f.capacity
@@ -67,6 +120,17 @@ func (f *Filter) Delete(item []byte) bool {
 	return false
 }
 
+// ItemCount ...
+//
+// Get an estimate of the total items in the Filter. Could be drastically off
+// if using Insert with many duplicate items. To get a more accurate total
+// using InsertUnique can be used
+//
+// Example:
+//
+// filter.ItemCount()
+//
+// returns an uint of the total items in the Filter
 func (f *Filter) ItemCount() uint {
 	return f.count
 }
