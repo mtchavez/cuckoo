@@ -5,7 +5,10 @@ import (
 	"hash/fnv"
 )
 
-type configOption func(*Filter)
+// ConfigOption ...
+//
+// Composed Filter function type used for configuring a Filter
+type ConfigOption func(*Filter)
 
 // Cuckoo Filter notation
 // e target false positive rate
@@ -30,37 +33,72 @@ var (
 	defaultHasher = fnv.New64()
 )
 
-func BucketEntries(entries uint) configOption {
+// BucketEntries ...
+//
+// Number of entries per bucket denoted as b
+//
+// Example:
+//
+// New(BucketEntries(uint(42)))
+func BucketEntries(entries uint) ConfigOption {
 	return func(f *Filter) {
 		f.bucketEntries = entries
 	}
 }
 
-func BucketTotal(total uint) configOption {
+// BucketTotal ...
+//
+// Number of buckets in the Filter denoted as m
+//
+// Example:
+//
+// New(BucketTotal(uint(42)))
+func BucketTotal(total uint) ConfigOption {
 	return func(f *Filter) {
 		f.bucketTotal = total
 	}
 }
 
-func FingerprintLength(length uint) configOption {
+// FingerprintLength ...
+//
+// Length of the item fingerprint denoted as f
+//
+// Example:
+//
+// New(FingerprintLength(uint(4)))
+func FingerprintLength(length uint) ConfigOption {
 	return func(f *Filter) {
 		f.fingerprintLength = length
 	}
 }
 
-func Hasher(hasher hash.Hash) configOption {
+// Hasher ...
+//
+// The hashing type to use for item fingerpints. Should be a hash.Hash type
+//
+// Example:
+//
+// New(Hasher(fnv.New64()))
+func Hasher(hasher hash.Hash) ConfigOption {
 	return func(f *Filter) {
 		f.hasher = hasher
 	}
 }
 
-func Kicks(kicks uint) configOption {
+// Kicks ...
+//
+// Maximum number of kicks to attempt when bucket collisions occur
+//
+// Example:
+//
+// New(Kicks(uint(200)))
+func Kicks(kicks uint) ConfigOption {
 	return func(f *Filter) {
 		f.kicks = kicks
 	}
 }
 
-func capacity() configOption {
+func capacity() ConfigOption {
 	return func(f *Filter) {
 		f.capacity = nextPowerOf2(uint64(f.bucketTotal)) / f.bucketEntries
 		if f.capacity <= 0 {
