@@ -74,7 +74,7 @@ func FingerprintLength(length uint) ConfigOption {
 
 // Hasher ...
 //
-// The hashing type to use for item fingerpints. Should be a hash.Hash type
+// The hashing type to use for item fingerprints. Should be a hash.Hash type
 //
 // Example:
 //
