@@ -2,11 +2,16 @@ package cuckoo
 
 import (
 	"hash"
+	"sync"
 )
 
 type fingerprint []byte
 
+var hashSync sync.Mutex
+
 func newFingerprint(item []byte, length uint, hasher hash.Hash) fingerprint {
+	hashSync.Lock()
+	defer hashSync.Unlock()
 	hasher.Reset()
 	hasher.Write(item)
 	hashedFingerprint := hasher.Sum(nil)
