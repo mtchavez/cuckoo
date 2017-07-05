@@ -192,3 +192,11 @@ func TestDelete(t *testing.T) {
 	}
 	assert.Equal(t, filter.ItemCount(), uint(0))
 }
+
+func TestDelete_notFound(t *testing.T) {
+	filter := New()
+	item := []byte("an-item")
+	filter.InsertUnique(item)
+	deleted := filter.Delete([]byte("not-found"))
+	assert.Equal(t, deleted, false)
+}
