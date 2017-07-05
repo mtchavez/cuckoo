@@ -40,6 +40,23 @@ func TestFilter_New_withConfigOptions(t *testing.T) {
 	assert.Equal(t, filter.bucketTotal, buckets)
 }
 
+func TestFilter_New_withLowCapacity(t *testing.T) {
+	entries := uint(1 << 18)
+	entriesOption := BucketEntries(entries)
+
+	buckets := uint(4)
+	bucketsOption := BucketTotal(buckets)
+
+	filter := New(
+		entriesOption,
+		bucketsOption,
+	)
+
+	assert.Equal(t, filter.capacity, uint(1))
+	assert.Equal(t, filter.bucketEntries, entries)
+	assert.Equal(t, filter.bucketTotal, buckets)
+}
+
 func TestInsert(t *testing.T) {
 	filter := New()
 	fd, err := os.Open("/usr/share/dict/words")
