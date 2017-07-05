@@ -97,6 +97,23 @@ func TestInsert_withRelocations(t *testing.T) {
 	assert.Equal(t, miss <= 0.065, true)
 }
 
+func TestInsertUnique(t *testing.T) {
+	filter := New()
+	item := []byte("an-item")
+	filter.InsertUnique(item)
+	assert.Equal(t, filter.ItemCount(), uint(1))
+	filter.InsertUnique(item)
+	assert.Equal(t, filter.ItemCount(), uint(1))
+}
+
+func TestInsertUnique_withNewItem(t *testing.T) {
+	filter := New()
+	filter.InsertUnique([]byte("an-item"))
+	assert.Equal(t, filter.ItemCount(), uint(1))
+	filter.InsertUnique([]byte("another-item"))
+	assert.Equal(t, filter.ItemCount(), uint(2))
+}
+
 func TestItemCount(t *testing.T) {
 	filter := New()
 	assert.Equal(t, filter.ItemCount(), uint(0))
