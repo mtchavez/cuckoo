@@ -155,6 +155,14 @@ func TestLookup(t *testing.T) {
 	assert.Equal(t, miss, float64(0))
 }
 
+func TestLookup_notFound(t *testing.T) {
+	filter := New()
+	item := []byte("an-item")
+	filter.InsertUnique(item)
+	found := filter.Lookup([]byte("not-found"))
+	assert.Equal(t, found, false)
+}
+
 func TestDelete(t *testing.T) {
 	filter := New()
 	fd, err := os.Open("/usr/share/dict/words")
