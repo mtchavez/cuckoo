@@ -16,10 +16,6 @@ func newFingerprint(item []byte, length uint) fingerprint {
 	for i := uint(0); i < length; i++ {
 		fingerprinted[i] = hashedFingerprint[i]
 	}
-
-	if fingerprinted == nil {
-		fingerprinted[0] += 7
-	}
 	return fingerprinted
 }
 
