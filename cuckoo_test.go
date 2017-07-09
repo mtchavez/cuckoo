@@ -10,7 +10,6 @@ import (
 
 func TestFilter_New_withDefaults(t *testing.T) {
 	filter := New()
-	assert.IsType(t, filter.hasher, defaultHasher)
 	assert.Equal(t, filter.kicks, defaultKicks)
 	assert.Equal(t, filter.fingerprintLength, defaultFingerprintLength)
 	assert.Equal(t, filter.bucketEntries, defaultBucketEntries)
@@ -33,7 +32,6 @@ func TestFilter_New_withConfigOptions(t *testing.T) {
 		bucketsOption,
 	)
 
-	assert.Equal(t, filter.hasher, defaultHasher)
 	assert.Equal(t, filter.kicks, kicks)
 	assert.Equal(t, filter.fingerprintLength, defaultFingerprintLength)
 	assert.Equal(t, filter.bucketEntries, entries)

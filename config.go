@@ -1,10 +1,5 @@
 package cuckoo
 
-import (
-	"hash"
-	"hash/fnv"
-)
-
 // ConfigOption ...
 //
 // Composed Filter function type used for configuring a Filter
@@ -27,10 +22,6 @@ const (
 	defaultFingerprintLength uint = 6
 	// Default attempts to find empty slot on insert
 	defaultKicks uint = 500
-)
-
-var (
-	defaultHasher = fnv.New64()
 )
 
 // BucketEntries ...
@@ -68,20 +59,10 @@ func BucketTotal(total uint) ConfigOption {
 // New(FingerprintLength(uint(4)))
 func FingerprintLength(length uint) ConfigOption {
 	return func(f *Filter) {
+		if length > uint(16) {
+			length = uint(16)
+		}
 		f.fingerprintLength = length
-	}
-}
-
-// Hasher ...
-//
-// The hashing type to use for item fingerprints. Should be a hash.Hash type
-//
-// Example:
-//
-// New(Hasher(fnv.New64()))
-func Hasher(hasher hash.Hash) ConfigOption {
-	return func(f *Filter) {
-		f.hasher = hasher
 	}
 }
 
@@ -118,10 +99,6 @@ func (f *Filter) configureDefaults() {
 
 	if f.fingerprintLength <= 0 {
 		FingerprintLength(defaultFingerprintLength)(f)
-	}
-
-	if f.hasher == nil {
-		Hasher(defaultHasher)(f)
 	}
 
 	if f.kicks <= 0 {
