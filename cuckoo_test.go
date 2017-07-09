@@ -55,6 +55,14 @@ func TestFilter_New_withLowCapacity(t *testing.T) {
 	assert.Equal(t, filter.bucketTotal, buckets)
 }
 
+func TestFilter_New_withTooLargeFingerprint(t *testing.T) {
+	filter := New(
+		FingerprintLength(uint(22)),
+	)
+
+	assert.Equal(t, filter.fingerprintLength, uint(16))
+}
+
 func TestInsert(t *testing.T) {
 	filter := New()
 	fd, err := os.Open("/usr/share/dict/words")
