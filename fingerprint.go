@@ -1,21 +1,17 @@
 package cuckoo
 
 import (
-	"hash"
 	"sync"
+
+	"github.com/DataDog/mmh3"
 )
 
 type fingerprint []byte
 
 var hashSync sync.Mutex
 
-func newFingerprint(item []byte, length uint, hasher hash.Hash) fingerprint {
-	hashSync.Lock()
-	defer hashSync.Unlock()
-	hasher.Reset()
-	hasher.Write(item)
-	hashedFingerprint := hasher.Sum(nil)
-
+func newFingerprint(item []byte, length uint) fingerprint {
+	hashedFingerprint := calculateHash(item, length)
 	fingerprinted := make(fingerprint, length, length)
 	for i := uint(0); i < length; i++ {
 		fingerprinted[i] = hashedFingerprint[i]
@@ -25,4 +21,9 @@ func newFingerprint(item []byte, length uint, hasher hash.Hash) fingerprint {
 		fingerprinted[0] += 7
 	}
 	return fingerprinted
+}
+
+func calculateHash(item []byte, length uint) (hashedItem []byte) {
+	hashedItem = mmh3.Hash128(item)
+	return
 }

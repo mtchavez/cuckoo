@@ -2,7 +2,6 @@ package cuckoo
 
 import (
 	"encoding/binary"
-	"hash"
 
 	farm "github.com/dgryski/go-farm"
 )
@@ -19,7 +18,6 @@ type Filter struct {
 	capacity          uint
 	count             uint
 	fingerprintLength uint
-	hasher            hash.Hash
 	kicks             uint
 }
 
@@ -56,7 +54,7 @@ func New(opts ...ConfigOption) (filter *Filter) {
 //
 // returns a boolean of whether the item was inserted or not
 func (f *Filter) Insert(item []byte) bool {
-	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
+	fp := newFingerprint(item, f.fingerprintLength)
 	i1 := uint(farm.Hash64(item)) % f.capacity
 	i2 := f.alternateIndex(fp, i1)
 	if f.insert(fp, i1) || f.insert(fp, i2) {
@@ -92,7 +90,7 @@ func (f *Filter) InsertUnique(item []byte) bool {
 //
 // returns a boolean of whether the item exists or not
 func (f *Filter) Lookup(item []byte) bool {
-	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
+	fp := newFingerprint(item, f.fingerprintLength)
 	i1 := uint(farm.Hash64(item)) % f.capacity
 	i2 := f.alternateIndex(fp, i1)
 	if f.lookup(fp, i1) || f.lookup(fp, i2) {
@@ -111,7 +109,7 @@ func (f *Filter) Lookup(item []byte) bool {
 //
 // returns a boolean of whether the item was deleted or not
 func (f *Filter) Delete(item []byte) bool {
-	fp := newFingerprint(item, f.fingerprintLength, f.hasher)
+	fp := newFingerprint(item, f.fingerprintLength)
 	i1 := uint(farm.Hash64(item)) % f.capacity
 	i2 := f.alternateIndex(fp, i1)
 	if f.delete(fp, i1) || f.delete(fp, i2) {
