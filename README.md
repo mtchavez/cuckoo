@@ -160,6 +160,51 @@ func main() {
 }
 ```
 
+### Save
+
+Encode and save a filter to be able to re-build or re-load back into memory.
+
+```go
+package main
+
+import (
+  "fmt"
+
+  "github.com/mtchavez/cuckoo"
+)
+
+func main() {
+	filter := New()
+	item := []byte("Largo")
+	filter.InsertUnique(item)
+	filter.Save("./tmp/example_save.gob")
+}
+```
+
+### Load
+
+Load a filter back into memory from an encoded filter saved to a file.
+
+```go
+package main
+
+import (
+  "fmt"
+
+  "github.com/mtchavez/cuckoo"
+)
+
+func main() {
+	filter := New()
+	item := []byte("Largo")
+	filter.InsertUnique(item)
+	filter.Save("./tmp/example_save.gob")
+
+	loadedFilter, _ := Load("./tmp/example_save.gob")
+	fmt.Printf("Loaded filter has same item? %v\n\n", loadedFilter.Lookup(item))
+}
+```
+
 ## Benchmarks
 
 There are benchmark tests to check performance of the filter. The following results
