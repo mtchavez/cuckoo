@@ -17,3 +17,6 @@
 *.gob
 *.txt
 *.log
+
+# Dependencies
+vendor
