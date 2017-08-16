@@ -16,6 +16,16 @@ Install via `go get`
 
 ## Usage
 
+- [New Filter](#new-filter)
+- [Configuring](#configuration)
+- [Insert](#insert)
+- [Insert Unique](#insert-unique)
+- [Lookup](#lookup)
+- [Delete](#delete)
+- [Item Count](#item-count)
+- [Save](#save)
+- [Load](#load)
+
 ### New Filter
 
 Create a new filter with default configuration
@@ -66,7 +76,7 @@ func main() {
 }
 ```
 
-### InsertUnique
+### Insert Unique
 
 Inserting items into a filter only if they do not already exist
 
@@ -135,7 +145,7 @@ func main() {
 }
 ```
 
-### ItemCount
+### Item Count
 
 Getting the item count of filter. **Using Insert with duplicates will cause the
 item count to be more like a total items inserted count**. Using InsertUnique
