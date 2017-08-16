@@ -2,6 +2,7 @@ package cuckoo
 
 import (
 	"encoding/binary"
+	"sync"
 
 	farm "github.com/dgryski/go-farm"
 )
@@ -12,6 +13,7 @@ const magicNumber uint64 = 0x5bd1e995
 //
 // Cuckoo filter type
 type Filter struct {
+	sync.Mutex
 	buckets           []bucket
 	bucketEntries     uint
 	bucketTotal       uint
@@ -134,6 +136,8 @@ func (f *Filter) ItemCount() uint {
 }
 
 func (f *Filter) insert(fp fingerprint, idx uint) bool {
+	f.Lock()
+	defer f.Unlock()
 	if f.buckets[idx].insert(fp) {
 		f.count++
 		return true
@@ -142,10 +146,13 @@ func (f *Filter) insert(fp fingerprint, idx uint) bool {
 }
 
 func (f *Filter) relocationInsert(fp fingerprint, i uint) bool {
+	f.Lock()
+	defer f.Unlock()
 	for k := uint(0); k < f.kicks; k++ {
 		f.buckets[i].relocate(fp)
 		i = f.alternateIndex(fp, i)
-		if f.insert(fp, i) {
+		if f.buckets[i].insert(fp) {
+			f.count++
 			return true
 		}
 	}

@@ -211,12 +211,12 @@ There are benchmark tests to check performance of the filter. The following resu
 were ran on a 2.3 GHz Intel Core i7
 
 ```
-# Updated: 2017-07-09
+# Updated: 2017-08-15
 
-BenchmarkCuckooNew-8                  20          73669936 ns/op
-BenchmarkInsert-8                2000000               885 ns/op
-BenchmarkInsertUnique-8          3000000               414 ns/op
-BenchmarkLookup-8                3000000               403 ns/op
+BenchmarkCuckooNew-8                  20          69606308 ns/op
+BenchmarkInsert-8                2000000              1000 ns/op
+BenchmarkInsertUnique-8          5000000               405 ns/op
+BenchmarkLookup-8                5000000               399 ns/op
 ```
 
 ## Tests
