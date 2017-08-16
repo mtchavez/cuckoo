@@ -18,7 +18,7 @@ type encodedFilter struct {
 }
 
 // MarshalBinary used to interact with gob encoding interface
-func (f Filter) MarshalBinary() ([]byte, error) {
+func (f *Filter) MarshalBinary() ([]byte, error) {
 	var buf bytes.Buffer
 	ef := encodedFilter{
 		Buckets:           f.buckets,
