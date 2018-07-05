@@ -5,6 +5,7 @@
 [![Go Documentation](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/mtchavez/cuckoo)
 [![Coverage Status](https://coveralls.io/repos/github/mtchavez/cuckoo/badge.svg)](https://coveralls.io/github/mtchavez/cuckoo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mtchavez/cuckoo)](https://goreportcard.com/report/github.com/mtchavez/cuckoo)
+[![Maintainability](https://api.codeclimate.com/v1/badges/3e295a8cb3cfe6f8c1ee/maintainability)](https://codeclimate.com/github/mtchavez/cuckoo/maintainability)
 
 Cuckoo Filter in Go
 
