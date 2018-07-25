@@ -22,6 +22,6 @@ ci: deps vet lint test
 
 test:
 	@echo "[Test] running tests"
-	gocov test > coverge/gocov.out; cat coverge/gocov.out | gocov report
+	gocov test > c.out; cat c.out | gocov report
 
 .PHONY: default golint test vet deps
