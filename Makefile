@@ -1,6 +1,6 @@
 ROOT := $(CURDIR)
 GOPKGS = \
-		golang.org/x/tools/cmd/cover \
+		github.com/axw/gocov/gocov \
 		github.com/golang/lint/golint \
 		github.com/golang/dep/cmd/dep
 
@@ -22,6 +22,6 @@ ci: deps vet lint test
 
 test:
 	@echo "[Test] running tests"
-	go test -v -cover
+	gocov test > coverge/gocov.out; cat coverge/gocov.out | gocov report
 
 .PHONY: default golint test vet deps
