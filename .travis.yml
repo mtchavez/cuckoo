@@ -13,5 +13,4 @@ script:
   - export PATH=$PATH:$HOME/gopath/bin
   - make ci
 after_script:
-  - ./cc-test-reporter format-coverage --input-type gocov
-  - ./cc-test-reporter upload-coverage
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
