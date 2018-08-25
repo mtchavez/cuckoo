@@ -13,7 +13,7 @@ const magicNumber uint64 = 0x5bd1e995
 //
 // Cuckoo filter type
 type Filter struct {
-	sync.Mutex
+	sync.RWMutex
 	buckets           []bucket
 	bucketEntries     uint
 	bucketTotal       uint
