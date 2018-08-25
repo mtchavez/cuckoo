@@ -57,13 +57,19 @@ func (f *Filter) UnmarshalBinary(data []byte) error {
 
 // Save takes a path to a file to save an encoded filter to disk
 func (f *Filter) Save(path string) error {
-	file, err := os.Create(path)
-	defer file.Close()
-	if err == nil {
-		encoder := gob.NewEncoder(file)
-		encoder.Encode(f)
+	file, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		return err
 	}
-	return err
+	f.RLock()
+	defer f.RUnlock()
+	encoder := gob.NewEncoder(file)
+	encoder.Encode(f)
+
+	if closeErr := file.Close(); closeErr != nil {
+		return closeErr
+	}
+	return nil
 }
 
 // Load takes a path to a file of an encoded Filter to load into memory
