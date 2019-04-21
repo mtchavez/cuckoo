@@ -1,13 +1,12 @@
 ROOT := $(CURDIR)
 GOPKGS = \
 		golang.org/x/tools/cmd/cover \
-		github.com/golang/lint/golint \
-		github.com/golang/dep/cmd/dep
+		github.com/golang/lint/golint
 
 default: test
 
 deps:
-	@go get -u -v $(GOPKGS)
+	@go get -v $(GOPKGS)
 
 lint:
 	@echo "[Lint] running golint"
