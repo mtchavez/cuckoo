@@ -22,6 +22,6 @@ ci: deps vet lint test
 
 test:
 	@echo "[Test] running tests"
-	go test -v -cover -coverprofile=c.out
+	go test -v -cover -bench=".*" -coverprofile=c.out
 
 .PHONY: default golint test vet deps
