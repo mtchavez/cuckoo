@@ -1,7 +1,6 @@
 language: go
 go:
-  - 1.9
-  - "1.10"
+  - "1.11"
   - "1.12"
 sudo: false
 before_script:
@@ -10,6 +9,7 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - export PATH=$PATH:$HOME/gopath/bin
+  - export GO111MODULE=on
   - make ci
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

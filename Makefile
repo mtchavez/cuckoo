@@ -8,7 +8,6 @@ default: test
 
 deps:
 	@go get -u -v $(GOPKGS)
-	@dep ensure
 
 lint:
 	@echo "[Lint] running golint"
