@@ -19,11 +19,33 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:2407d73d2349c9dd9d7b2c9fafcee9412444cb6cb261ee47ebb751b2a5507976"
+  digest = "1:6d8224c46bae831d782f1af734c1bef2765f5ac81307dd8d522d61a9dad5aa1f"
   name = "github.com/dgryski/go-farm"
   packages = ["."]
   pruneopts = ""
-  revision = "2de33835d10275975374b37b2dcfd22c9020a1f5"
+  revision = "6a90982ecee230ff6cba02d5bd386acc030be9d3"
+
+[[projects]]
+  branch = "master"
+  digest = "1:580f79bbb55a397ea234a61ca53adde6fed16253ac52507e14db71adc811af86"
+  name = "github.com/mmcloughlin/avo"
+  packages = [
+    "attr",
+    "build",
+    "buildtags",
+    "gotypes",
+    "internal/prnt",
+    "internal/stack",
+    "ir",
+    "operand",
+    "pass",
+    "printer",
+    "reg",
+    "src",
+    "x86",
+  ]
+  pruneopts = ""
+  revision = "2e7d06bc7ada2979f17ccf8ebf486dba23b84fc7"
 
 [[projects]]
   digest = "1:256484dbbcd271f9ecebc6795b2df8cad4c458dd0f5fd82a8c2fa0c29f233411"
@@ -40,6 +62,24 @@
   pruneopts = ""
   revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
   version = "v1.2.2"
+
+[[projects]]
+  branch = "master"
+  digest = "1:742bf96dc301520ed7bd93e208cbffc60989ef3d2a355c676864b4691d20805a"
+  name = "golang.org/x/tools"
+  packages = [
+    "go/ast/astutil",
+    "go/gcexportdata",
+    "go/internal/gcimporter",
+    "go/internal/packagesdriver",
+    "go/packages",
+    "go/types/typeutil",
+    "internal/fastwalk",
+    "internal/gopathwalk",
+    "internal/semver",
+  ]
+  pruneopts = ""
+  revision = "cb2dda6eabdf9160e66ca7293897f984154a7f8b"
 
 [solve-meta]
   analyzer-name = "dep"
