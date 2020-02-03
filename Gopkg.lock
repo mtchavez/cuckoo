@@ -19,11 +19,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:6d8224c46bae831d782f1af734c1bef2765f5ac81307dd8d522d61a9dad5aa1f"
+  digest = "1:10c08ce6e6d9dc96a5a0b5b1e9c5a366868320f15989a5f2ee9c319bc9f17118"
   name = "github.com/dgryski/go-farm"
   packages = ["."]
   pruneopts = ""
-  revision = "6a90982ecee230ff6cba02d5bd386acc030be9d3"
+  revision = "a6ae2369ad13dc757768086f0cb902728c7e03e5"
 
 [[projects]]
   branch = "master"
