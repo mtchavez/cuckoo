@@ -3,11 +3,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5430bf8a572af357fba5aab0ac466c31c6d86f03085b3014f2494500c45e3c89"
+  digest = "1:c4b3e2b49c4f3a6714b55523fcbf762d5c88967b8efa69fff1ea47f424f3c75a"
   name = "github.com/DataDog/mmh3"
   packages = ["."]
   pruneopts = ""
-  revision = "2cfb68475274527a10701355c739f31dd404718c"
+  revision = "30884ca2197a84c5a6d858be1a4853abc6b89002"
 
 [[projects]]
   digest = "1:56c130d885a4aacae1dd9c7b71cfe39912c7ebc1ff7d2b46083c8812996dc43b"
