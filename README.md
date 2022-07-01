@@ -221,7 +221,7 @@ func main() {
 There are benchmark tests to check performance of the filter. The following results
 were ran on a 2.3 GHz Intel Core i7
 
-```
+```txt
 # Updated: 2022-07-01
 
 goos: darwin
