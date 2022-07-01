@@ -5,7 +5,7 @@ GOPKGS = \
 default: test
 
 deps:
-	@go get -v $(GOPKGS)
+	@go install -v $(GOPKGS)
 
 vet:
 	@echo "[Vet] running go vet"
