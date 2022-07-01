@@ -13,7 +13,7 @@ Cuckoo Filter in Go
 
 Install via `go get`
 
-`go get -u -v github.com/mtchavez/cuckoo`
+`go get -v github.com/mtchavez/cuckoo`
 
 ## Usage
 
@@ -52,13 +52,13 @@ package main
 import "github.com/mtchavez/cuckoo"
 
 func main() {
-	options := []cuckoo.ConfigOption{
-		cuckoo.BucketEntries(uint(24)),
-		cuckoo.BucketTotal(uint(1 << 16)),
-		cuckoo.FingerprintLength(uint(1)),
-		cuckoo.Kicks(uint(250)),
-	}
-	cuckoo.New(options...)
+  options := []cuckoo.ConfigOption{
+    cuckoo.BucketEntries(uint(24)),
+    cuckoo.BucketTotal(uint(1 << 16)),
+    cuckoo.FingerprintLength(uint(1)),
+    cuckoo.Kicks(uint(250)),
+  }
+  cuckoo.New(options...)
 }
 ```
 
@@ -185,10 +185,10 @@ import (
 )
 
 func main() {
-	filter := New()
-	item := []byte("Largo")
-	filter.InsertUnique(item)
-	filter.Save("./tmp/example_save.gob")
+  filter := New()
+  item := []byte("Largo")
+  filter.InsertUnique(item)
+  filter.Save("./tmp/example_save.gob")
 }
 ```
 
@@ -206,13 +206,13 @@ import (
 )
 
 func main() {
-	filter := New()
-	item := []byte("Largo")
-	filter.InsertUnique(item)
-	filter.Save("./tmp/example_save.gob")
+  filter := New()
+  item := []byte("Largo")
+  filter.InsertUnique(item)
+  filter.Save("./tmp/example_save.gob")
 
-	loadedFilter, _ := Load("./tmp/example_save.gob")
-	fmt.Printf("Loaded filter has same item? %v\n\n", loadedFilter.Lookup(item))
+  loadedFilter, _ := Load("./tmp/example_save.gob")
+  fmt.Printf("Loaded filter has same item? %v\n\n", loadedFilter.Lookup(item))
 }
 ```
 
@@ -222,16 +222,20 @@ There are benchmark tests to check performance of the filter. The following resu
 were ran on a 2.3 GHz Intel Core i7
 
 ```
-# Updated: 2017-08-15
+# Updated: 2022-07-01
 
-BenchmarkCuckooNew-8                  20          69606308 ns/op
-BenchmarkInsert-8                2000000              1000 ns/op
-BenchmarkInsertUnique-8          5000000               405 ns/op
-BenchmarkLookup-8                5000000               399 ns/op
+goos: darwin
+goarch: arm64
+pkg: github.com/mtchavez/cuckoo
+
+BenchmarkCuckooNew-10                 48            23354917 ns/op
+BenchmarkInsert-10               3342568               806.5 ns/op
+BenchmarkInsertUnique-10         6203035               194.7 ns/op
+BenchmarkLookup-10               6465182               196.3 ns/op
 ```
 
 ## Tests
 
 Run tests via `go test` or with provided `Makefile`
 
-`go test -v -cover` or `make test`
+`go test -v -cover ./...` or `make test`
