@@ -76,10 +76,11 @@ func (f *Filter) Save(path string) error {
 func Load(path string) (*Filter, error) {
 	f := &Filter{}
 	file, err := os.Open(path)
-	defer file.Close()
 	if err == nil {
 		decoder := gob.NewDecoder(file)
 		err = decoder.Decode(&f)
 	}
+	defer file.Close()
+
 	return f, err
 }
