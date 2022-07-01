@@ -3,7 +3,7 @@ module github.com/mtchavez/cuckoo
 go 1.15
 
 require (
-	github.com/DataDog/mmh3 v0.0.0-20160824182314-2cfb68475274
+	github.com/DataDog/mmh3 v0.0.0-20210722141835-012dc69a9e49
 	github.com/Masterminds/semver v1.4.2 // indirect
 	github.com/Masterminds/vcs v1.13.0 // indirect
 	github.com/armon/go-radix v1.0.0 // indirect
@@ -19,5 +19,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/sdboyer/constext v0.0.0-20170321163424-836a14457353 // indirect
 	github.com/stretchr/testify v1.2.2
-	golang.org/x/tools v0.1.7 // indirect
+	golang.org/x/tools v0.1.11 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )

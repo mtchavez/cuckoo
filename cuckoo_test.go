@@ -66,15 +66,14 @@ func TestFilter_New_withTooLargeFingerprint(t *testing.T) {
 func TestInsert(t *testing.T) {
 	filter := New()
 	fd, err := os.Open("/usr/share/dict/words")
-	defer fd.Close()
 	if err != nil {
 		t.Errorf(err.Error())
 	}
+	defer fd.Close()
 
 	scanner := bufio.NewScanner(fd)
 	var wordCount uint
 	var totalWords uint
-	var values [][]byte
 	for scanner.Scan() {
 		word := []byte(scanner.Text())
 		totalWords++
@@ -82,7 +81,6 @@ func TestInsert(t *testing.T) {
 		if filter.Insert(word) {
 			wordCount++
 		}
-		values = append(values, word)
 	}
 
 	assert.Equal(t, int(filter.ItemCount()), int(totalWords))
@@ -96,15 +94,14 @@ func TestInsert_withRelocations(t *testing.T) {
 	)
 
 	fd, err := os.Open("/usr/share/dict/words")
-	defer fd.Close()
 	if err != nil {
 		t.Errorf(err.Error())
 	}
+	defer fd.Close()
 
 	scanner := bufio.NewScanner(fd)
 	var wordCount uint
 	var totalWords uint
-	var values [][]byte
 	for scanner.Scan() {
 		word := []byte(scanner.Text())
 		totalWords++
@@ -112,7 +109,6 @@ func TestInsert_withRelocations(t *testing.T) {
 		if filter.Insert(word) {
 			wordCount++
 		}
-		values = append(values, word)
 	}
 	inserted := int(filter.ItemCount())
 	total := int(totalWords)
@@ -147,10 +143,10 @@ func TestItemCount(t *testing.T) {
 func TestLookup(t *testing.T) {
 	filter := New()
 	fd, err := os.Open("/usr/share/dict/words")
-	defer fd.Close()
 	if err != nil {
 		t.Errorf(err.Error())
 	}
+	defer fd.Close()
 
 	scanner := bufio.NewScanner(fd)
 	var wordCount uint
@@ -189,10 +185,10 @@ func TestLookup_notFound(t *testing.T) {
 func TestDelete(t *testing.T) {
 	filter := New()
 	fd, err := os.Open("/usr/share/dict/words")
-	defer fd.Close()
 	if err != nil {
 		t.Errorf(err.Error())
 	}
+	defer fd.Close()
 
 	scanner := bufio.NewScanner(fd)
 	var wordCount uint

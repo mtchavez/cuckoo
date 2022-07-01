@@ -160,10 +160,7 @@ func (f *Filter) relocationInsert(fp fingerprint, i uint) bool {
 }
 
 func (f *Filter) lookup(fp fingerprint, i uint) bool {
-	if f.buckets[i].lookup(fp) {
-		return true
-	}
-	return false
+	return f.buckets[i].lookup(fp)
 }
 
 func (f *Filter) delete(fp fingerprint, idx uint) bool {
@@ -175,18 +172,16 @@ func (f *Filter) delete(fp fingerprint, idx uint) bool {
 }
 
 func (f *Filter) createBuckets() {
-	buckets := make([]bucket, f.capacity, f.capacity)
+	buckets := make([]bucket, f.capacity)
 	for i := range buckets {
-		buckets[i] = make([]fingerprint, f.bucketEntries, f.bucketEntries)
+		buckets[i] = make([]fingerprint, f.bucketEntries)
 	}
 	f.buckets = buckets
 }
 
 func (f *Filter) alternateIndex(fp fingerprint, i uint) uint {
-	bytes := make([]byte, 64, 64)
-	for i, b := range fp {
-		bytes[i] = b
-	}
+	bytes := make([]byte, 64)
+	copy(bytes, fp)
 
 	hash := binary.LittleEndian.Uint64(bytes)
 	return uint(uint64(i)^(hash*magicNumber)) % f.capacity
